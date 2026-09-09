@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>60.0</apiVersion>
+    <description>Sends welcome email, creates task, and marks course Live on new enrollment</description>
+    <label>Enrollment Welcome</label>
+    <processType>AutoLaunchedFlow</processType>
+    <status>Active</status>
+    <start>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Welcome_Student</targetReference>
+        </connector>
+        <object>Enrollment__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <actionCalls>
+        <name>Welcome_Student</name>
+        <label>Welcome Student</label>
+        <locationX>176</locationX>
+        <locationY>323</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>Create_Follow_Up_Task</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>emailAddresses</name>
+            <value>
+                <elementReference>$Record.Student__r.Email</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <stringValue>CurrentUser</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>Welcome to your course</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <elementReference>EmailBodyFormula</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <formulas>
+        <name>EmailBodyFormula</name>
+        <dataType>String</dataType>
+        <expression>"Welcome to " + {!$Record.Course__r.Name} + ". See you on " + TEXT({!$Record.Course__r.Start_Date__c}) + "."</expression>
+    </formulas>
+    <recordCreates>
+        <name>Create_Follow_Up_Task</name>
+        <label>Create Follow-Up Task</label>
+        <locationX>176</locationX>
+        <locationY>431</locationY>
+        <connector>
+            <targetReference>Mark_Course_Live</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <stringValue>Call new student</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>WhoId</field>
+            <value>
+                <elementReference>$Record.Student__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>WhatId</field>
+            <value>
+                <elementReference>$Record.Course__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OwnerId</field>
+            <value>
+                <elementReference>$Record.CreatedById</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Task</object>
+    </recordCreates>
+    <recordUpdates>
+        <name>Mark_Course_Live</name>
+        <label>Mark Course Live</label>
+        <locationX>176</locationX>
+        <locationY>539</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Course__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Status__c</field>
+            <value>
+                <stringValue>Live</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Course__c</object>
+    </recordUpdates>
+</Flow>

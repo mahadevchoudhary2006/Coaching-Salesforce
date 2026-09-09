@@ -1,0 +1,12 @@
+{
+  "packageDirectories": [
+    {
+      "path": "force-app",
+      "default": true
+    }
+  ],
+  "name": "CoachingCentreSolution",
+  "namespace": "",
+  "sfdcLoginUrl": "https://orgfarm-8f61b35741-dev-ed.develop.my.salesforce.com",
+  "sourceApiVersion": "60.0"
+}

@@ -1,0 +1,22 @@
+# Salesforce DX system directories & auth caches
+.sf/
+.sfdx/
+.local/
+
+# Logs and debug files
+*.log
+*.tmp
+*.bak
+
+# IDE & OS files
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Scratch and temporary directories
+.tempmediaStorage/
+scratch/
