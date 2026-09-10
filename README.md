@@ -82,7 +82,12 @@ sf config set target-org=my-coaching-org
 ### Step 3: Deploy All Metadata (1 Command)
 Deploy all objects, fields, tabs, flows, security rules, reports, and dashboards:
 ```bash
-sf project deploy start -o my-coaching-org
+sf project deploy start
+```
+
+Assign the Coaching Admin Permission Set to your user (grants full access to Course & Enrollment fields):
+```bash
+sf org assign permset -n Coaching_Admin_Access
 ```
 
 ---
