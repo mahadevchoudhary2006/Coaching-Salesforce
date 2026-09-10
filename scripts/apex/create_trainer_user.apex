@@ -2,7 +2,7 @@
 Profile p = [SELECT Id FROM Profile WHERE Name = 'Trainer' LIMIT 1];
 UserRole r = [SELECT Id FROM UserRole WHERE DeveloperName = 'Trainer' LIMIT 1];
 
-String orgDomain = [SELECT Id FROM Organization LIMIT 1].Id.toLowerCase();
+String orgDomain = String.valueOf(UserInfo.getOrganizationId()).toLowerCase();
 String uniqueUsername = 'trainer.one.' + orgDomain + '@dev.salesforce.com';
 
 List<User> existing = [SELECT Id FROM User WHERE Username = :uniqueUsername];
