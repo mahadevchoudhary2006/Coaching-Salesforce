@@ -7,6 +7,6 @@
   ],
   "name": "CoachingCentreSolution",
   "namespace": "",
-  "sfdcLoginUrl": "https://orgfarm-8f61b35741-dev-ed.develop.my.salesforce.com",
+  "sfdcLoginUrl": "https://login.salesforce.com",
   "sourceApiVersion": "60.0"
 }

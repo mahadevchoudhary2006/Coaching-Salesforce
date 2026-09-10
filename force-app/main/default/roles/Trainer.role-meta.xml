@@ -6,4 +6,5 @@
     <mayForecastManagerShare>false</mayForecastManagerShare>
     <name>Trainer</name>
     <opportunityAccessLevel>Edit</opportunityAccessLevel>
+    <parentRole>Trainer_Manager</parentRole>
 </Role>
